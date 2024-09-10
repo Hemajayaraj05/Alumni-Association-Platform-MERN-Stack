@@ -1,0 +1,93 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color:black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Prevent scroll bars */
+  }
+  
+  .registration-form {
+    background-color:black;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(250, 251, 255);
+    max-width: 700px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .registration-form h2 {
+    margin-bottom: 20px;
+    color:aqua;
+    text-align: center;
+  }
+  
+  .form-grid {
+    display: flex; /* Flexbox for splitting fields */
+    gap: 20px; /* Space between columns */
+  }
+  
+  .form-column {
+    flex: 1; /* Equal width for both columns */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .registration-form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #fef8f8;
+  }
+  
+  .registration-form input,
+  .registration-form select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  
+  .registration-form input[type="text"],
+  .registration-form input[type="email"],
+  .registration-form input[type="tel"],
+  .registration-form input[type="number"],
+  .registration-form select {
+    transition: border-color 0.3s;
+  }
+  
+  .registration-form input:focus,
+  .registration-form select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .registration-form input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+  }
+  
+  .registration-form button {
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px; /* Space above button */
+  }
+  
+  .registration-form button:hover {
+    background-color: #0056b3;
+  }
+  
