@@ -2,16 +2,16 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color:black;
+    background-color:rgb(254, 254, 254);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    overflow: hidden; /* Prevent scroll bars */
+    overflow: hidden; 
   }
   
   .registration-form {
-    background-color:black;
+    background-color:rgb(245, 245, 245);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgb(250, 251, 255);
@@ -20,20 +20,24 @@ body {
     display: flex;
     flex-direction: column;
   }
+  .registration-form {
+   
+    box-shadow: 0 0 10px rgba(15, 86, 157, 0.826);
+  }
   
   .registration-form h2 {
     margin-bottom: 20px;
-    color:aqua;
+    color:rgb(0, 0, 0);
     text-align: center;
   }
   
   .form-grid {
-    display: flex; /* Flexbox for splitting fields */
-    gap: 20px; /* Space between columns */
+    display: flex;
+    gap: 20px; 
   }
   
   .form-column {
-    flex: 1; /* Equal width for both columns */
+    flex: 1; 
     display: flex;
     flex-direction: column;
   }
@@ -43,7 +47,7 @@ body {
     flex-direction: column;
     margin-bottom: 15px;
     font-weight: bold;
-    color: #fef8f8;
+    color: #000000;
   }
   
   .registration-form input,

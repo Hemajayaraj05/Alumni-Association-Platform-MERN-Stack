@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 
-import { FaLock, FaEnvelope } from 'react-icons/fa'; // Importing icons for better UI
-import './Login.css'; // Import CSS file for styling
+import { FaLock, FaEnvelope } from 'react-icons/fa'; 
+import './Login.css'; 
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ const LoginPage = () => {
     event.preventDefault();
     let errors = {};
 
-    // Basic Validation
+   
     if (!formData.email.trim()) {
       errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -41,7 +41,7 @@ const LoginPage = () => {
     }
 
     if (Object.keys(errors).length === 0) {
-      console.log('Form data:', formData); // Handle login (e.g., API call)
+      console.log('Form data:', formData); 
       alert('Logged in successfully!');
       setFormData({
         email: '',

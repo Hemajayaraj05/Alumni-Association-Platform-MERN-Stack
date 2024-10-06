@@ -6,6 +6,11 @@ const departments = [
   { code: '101', name: 'Computer Science' },
   { code: '102', name: 'Electrical Engineering' },
   { code: '103', name: 'Mechanical Engineering' },
+  { code: '104', name: 'Information Technology' },
+  { code: '105', name: 'Biomedical Engineering' },
+  { code: '106', name: 'Biotech Engineering' },
+  { code: '107', name: 'Civil Engineering' },
+  { code: '108', name: 'AIDS Engineering' },
 
 ];
 
@@ -20,12 +25,12 @@ const RegistrationForm = () => {
   const [rollNumber, setRollNumber] = useState('');
   const [registrationNumber, setRegistrationNumber] = useState('');
 
-  // Update the registration number dynamically when dependent fields change
+  
   useEffect(() => {
     if (yearOfJoining.length === 2 && departmentCode && rollNumber.length === 3) {
       setRegistrationNumber(`7140${yearOfJoining}${departmentCode}${rollNumber}`);
     } else {
-      setRegistrationNumber(''); // Clear the registration number if conditions are not met
+      setRegistrationNumber(''); 
     }
   }, [yearOfJoining, departmentCode, rollNumber]);
 
@@ -39,15 +44,15 @@ const RegistrationForm = () => {
       currentlyWorking,
       registrationNumber,
     });
-    // Add further logic for form validation and submission
+ 
   };
 
   return (
     <div className="registration-form">
-      <h2>Registration Form</h2>
+      <h2>REGISTRATION FORM</h2>
       <form onSubmit={handleRegistration}>
         <div className="form-grid">
-          {/* Left Column */}
+      
           <div className="form-column">
             <label>
               Name:
@@ -90,7 +95,6 @@ const RegistrationForm = () => {
             </label>
           </div>
 
-          {/* Right Column */}
           <div className="form-column">
             <label>
               Currently Working:
@@ -150,7 +154,6 @@ const RegistrationForm = () => {
           </div>
         </div>
 
-        {/* Submit Button */}
         <button type="submit">Submit</button>
       </form>
     </div>
