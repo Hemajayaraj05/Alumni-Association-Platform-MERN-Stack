@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-
+import '../styles/Login.css';
 
 import { FaLock, FaEnvelope } from 'react-icons/fa'; 
-import './Login.css'; 
+
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({

@@ -1,13 +1,15 @@
 
 import './App.css';
-import RegistrationForm from './Register';
-// import LoginPage from './Login';
+// import Contact from './components/Contact';
+// import RegistrationForm from './components/Register';
+import LoginPage from './components/Login';
 
 function App() {
   return (
     <div>
-      <RegistrationForm />
-      {/* <LoginPage /> */}
+      {/* <Contact/> */}
+      {/* <RegistrationForm /> */}
+      <LoginPage />
     </div>
   );
 }

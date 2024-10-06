@@ -2,16 +2,19 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color:rgb(254, 254, 254);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden; 
+    background-image: url('../images/loginregister_bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Fixes the background to stay in place */
+    background-size: cover;
   }
   
   .registration-form {
-    background-color:rgb(245, 245, 245);
+    backdrop-filter: blur(16px); 
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgb(250, 251, 255);
@@ -94,4 +97,42 @@ body {
   .registration-form button:hover {
     background-color: #0056b3;
   }
+  @media (max-width: 768px) {
+    body {
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+      height: auto; /* Allow body to take the content height */
+      overflow-y: auto; /* Enable scrolling on mobile */
+    }
   
+    .registration-form {
+      width: 90vw; /* Reduce form width to fit mobile screen */
+      padding: 15px;
+      box-shadow: none; /* Simplify shadow for mobile */
+    }
+  
+    .form-grid {
+      display: block; /* Stack the form elements vertically */
+    }
+  
+    .form-column {
+      width: 100%; /* Make columns full width */
+    }
+  
+    .registration-form h2 {
+      font-size: 24px; /* Slightly smaller heading size for mobile */
+    }
+  
+    .registration-form input,
+    .registration-form select {
+      width: 100%; /* Make inputs and select elements full width */
+      font-size: 16px; /* Slightly larger font size for readability */
+    }
+  
+    .registration-form button {
+      width: 100%; /* Make button full width */
+      padding: 14px;
+      font-size: 18px; /* Make the button more prominent */
+    }
+  }

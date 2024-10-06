@@ -9,8 +9,11 @@ body, html {
     font-family:Arial, Helvetica, sans-serif;
     justify-content: center;
     align-items: center;
-  
     overflow: hidden;
+    background-image: url('../images/loginregister_bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Fixes the background to stay in place */
+    background-size: cover;
   }
   
   .container {
@@ -28,6 +31,7 @@ body, html {
   
   
   .container {
+    backdrop-filter: blur(8px); 
     padding: 100px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(15, 86, 157, 0.826);
@@ -119,4 +123,59 @@ body, html {
     display: block;
     margin-top: 5px;
   }
-  
+  @media (max-width: 768px) {
+    body, html {
+        height: 100%; 
+        margin: 0;
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+        overflow-y: auto; 
+    }
+
+    .container {
+        max-width: 95%; 
+        padding: 30px; 
+        margin: 0; 
+        box-shadow: 0 0 10px rgba(23, 134, 171, 0.968); 
+    }
+
+    h2 {
+        font-size: 24px; /* Slightly smaller heading */
+        text-align: center; /* Center align heading text */
+    }
+
+    form div {
+        flex-direction: column; /* Stack form elements vertically */
+        align-items: flex-start; /* Align form items to the start */
+    }
+
+    label {
+        width: 100%; 
+        margin-bottom: 10px; 
+        text-align: left; 
+    }
+
+    .input-container {
+        width: 100%; 
+    }
+
+    .input-container input {
+        padding: 12px; 
+        font-size: 16px; 
+    }
+
+    button {
+        padding: 14px; 
+        font-size: 16px; 
+    }
+
+    .radio-group {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .radio-group label {
+        margin-bottom: 10px;
+    }
+}
