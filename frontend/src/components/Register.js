@@ -48,80 +48,94 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="registration-form">
+    
+      <div className="registerbody">
+
+    <div className="registration-form  ">
       <h2>REGISTRATION FORM</h2>
       <form onSubmit={handleRegistration}>
         <div className="form-grid">
       
           <div className="form-column">
             <label>
-              Name:
+             
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                placeholder='Name'
                 required
               />
             </label>
+            <br/>
 
             <label>
-              Email ID:
+             
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder='Email ID'
                 required
               />
             </label>
+            <br/>
 
             <label>
-              Phone Number:
+             
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                placeholder=' Phone Number'
                 required
               />
             </label>
-
+            <br/>
             <label>
-              Year of Passing:
+             
               <input
                 type="number"
                 value={yearOfPassing}
                 onChange={(e) => setYearOfPassing(e.target.value)}
+                placeholder=' Year of Passing'
                 required
               />
             </label>
+            <button type="submit" className='create'>Create Profile</button>
           </div>
 
-          <div className="form-column">
+          <div className="form-column" >
+          <br/>
             <label>
-              Currently Working:
+             
               <input
                 type="text"
                 value={currentlyWorking}
                 onChange={(e) => setCurrentlyWorking(e.target.value)}
+                placeholder=' Currently Working'
                 required
               />
             </label>
-
+            <br/>
             <label>
-              Year of Joining:
+              
               <input
                 type="number"
                 value={yearOfJoining}
                 onChange={(e) => setYearOfJoining(e.target.value)}
+                placeholder='Year of Joining'
                 min="00"
                 max="99"
                 required
               />
             </label>
-
+             <br/>
             <label>
-              Department Code:
+           
               <select
                 value={departmentCode}
+                placeholder="Department Code"
                 onChange={(e) => setDepartmentCode(e.target.value)}
                 required
               >
@@ -133,9 +147,9 @@ const RegistrationForm = () => {
                 ))}
               </select>
             </label>
-
+            <br/>
             <label>
-              Roll Number:
+             
               <input
                 type="text"
                 value={rollNumber}
@@ -143,13 +157,15 @@ const RegistrationForm = () => {
                 pattern="\d{3}"
                 title="Roll number should be a 3-digit number"
                 maxLength="3"
+                placeholder=' Roll Number'
                 required
               />
             </label>
-
+            <br/>
             <label>
-              Registration Number:
-              <input type="text" value={registrationNumber} readOnly />
+             
+              <input type="text" value={registrationNumber} placeholder=' Registration Number'readOnly />
+              
             </label>
           </div>
         </div>
@@ -157,6 +173,8 @@ const RegistrationForm = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
+      </div>
+    
   );
 };
 

@@ -57,7 +57,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="container">
+    <div className="loginbody">
+
+<div className="logincontainer">
       <h2>LOGIN</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -91,6 +93,9 @@ const LoginPage = () => {
         <button type="submit">Login</button>
       </form>
     </div>
+
+    </div>
+    
   );
 };
 

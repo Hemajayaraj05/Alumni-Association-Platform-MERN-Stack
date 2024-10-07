@@ -8,8 +8,8 @@ function Contact(){
 
 
 return(
-    <body>
-    <div className="container">
+    <body className="contactbody">
+    <div className="contactcontainer">
         <h2>Contact Us</h2>
         <label>
         Username
@@ -36,8 +36,9 @@ return(
                 required
                 />
         </label><br/>
-
+         <div className="contact_button">
         <button value="Submit">Submit</button>
+        </div>
         
 
     </div>
