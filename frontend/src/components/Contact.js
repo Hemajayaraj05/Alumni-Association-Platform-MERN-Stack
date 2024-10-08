@@ -12,7 +12,7 @@ return(
     <div className="contactcontainer">
         <h2>Contact Us</h2>
         <label>
-        Username
+      
                 <input 
                 type="text"
                 value={reportId}
@@ -25,7 +25,7 @@ return(
 
 
         <label>
-            Write down your Queries<br/>
+           <br/>
                 <textarea 
                 type="text"
                 value={issue}

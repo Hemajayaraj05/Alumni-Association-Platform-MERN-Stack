@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
-
+import { Link } from 'react-router-dom';
 import { FaLock, FaEnvelope } from 'react-icons/fa'; 
 
 
@@ -90,6 +90,7 @@ const LoginPage = () => {
           </div>
           {formErrors.password && <span>{formErrors.password}</span>}
         </div>
+        <p>Dont't have an Account<Link to='/register'>...Sign Up</Link></p>
         <button type="submit">Login</button>
       </form>
     </div>

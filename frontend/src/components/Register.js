@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Register.css';
+import { Link } from 'react-router-dom';
+
 
 
 const departments = [
@@ -57,9 +59,11 @@ const RegistrationForm = () => {
         <div className="form-grid">
       
           <div className="form-column">
+        
             <label>
-             
+           
               <input
+              
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -169,7 +173,7 @@ const RegistrationForm = () => {
             </label>
           </div>
         </div>
-
+        <p>Already have an Account<Link to='/login'>...Login</Link></p>
         <button type="submit">Submit</button>
       </form>
     </div>
