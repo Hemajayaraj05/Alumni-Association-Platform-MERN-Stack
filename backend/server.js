@@ -1,131 +1,130 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 
 const app = express();
-
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 mongoose.connect('mongodb://localhost:27017/alumniDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('MongoDB connected');
-}).catch(err => {
-    console.error('Connection error', err);
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-const registrationSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    phone: {
-        type: String,
-        required: true,
-    },
-    yearOfPassing: {
-        type: Number,
-        required: true,
-    },
-    currentlyWorking: {
-        type: String,
-        required: true,
-    },
-    yearOfJoining: {
-        type: Number,
-        required: true,
-        min: 0,
-        max: 99,
-    },
-    departmentCode: {
-        type: String,
-        required: true,
-    },
-    rollNumber: {
-        type: String,
-        required: true,
-        match: /^[0-9]{3}$/,
-    },
-    registrationNumber: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    }
+// Schemas and Models
+const UserSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  phone: String,
+  yearOfPassing: String,
+  currentlyWorking: String,
+  yearOfJoining: String,
+  departmentCode: String,
+  rollNumber: String,
+  registrationNumber: String,
+  password: String,
+  profile: {
+    workExperience: String,
+    companyName: String,
+    isMentor: Boolean,
+    skills: String,
+  },
 });
 
-const Registration = mongoose.model('Registration', registrationSchema);
+const PostSchema = new mongoose.Schema({
+  content: String,
+  postedAt: { type: Date, default: Date.now },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+});
 
+const User = mongoose.model('User', UserSchema);
+const Post = mongoose.model('Post', PostSchema);
+
+// Routes
 app.post('/register', async (req, res) => {
-    const {
-        name,
-        email,
-        phone,
-        yearOfPassing,
-        currentlyWorking,
-        yearOfJoining,
-        departmentCode,
-        rollNumber,
-        registrationNumber,
-        password
-    } = req.body;
+  const {
+    name, email, phone, yearOfPassing,
+    currentlyWorking, yearOfJoining, departmentCode,
+    rollNumber, registrationNumber, password
+  } = req.body;
 
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new Registration({
-            name,
-            email,
-            phone,
-            yearOfPassing,
-            currentlyWorking,
-            yearOfJoining,
-            departmentCode,
-            rollNumber,
-            registrationNumber,
-            password: hashedPassword
-        });
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-        await newUser.save();
-        res.status(201).json({ message: 'User registered successfully' });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to register user' });
-    }
+  const newUser = new User({
+    name,
+    email,
+    phone,
+    yearOfPassing,
+    currentlyWorking,
+    yearOfJoining,
+    departmentCode,
+    rollNumber,
+    registrationNumber,
+    password: hashedPassword,
+  });
+
+  await newUser.save();
+  res.status(201).json({ message: 'User registered successfully' });
 });
 
 app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
 
-    try {
-        const user = await Registration.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ message: 'User not found' });
-        }
+  if (!user) return res.status(400).json({ message: 'User not found' });
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-        res.json({ message: 'Logged in successfully!', user });
-    } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
+  res.json({ message: 'Logged in successfully', user });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.get('/user', async (req, res) => {
+  const user = await User.findOne(); // Fetch user data
+  res.json(user);
+});
+
+app.get('/profile', async (req, res) => {
+  const user = await User.findOne(); // Fetch user profile data
+  res.json(user.profile);
+});
+
+app.put('/profile', async (req, res) => {
+  const { workExperience, companyName, isMentor, skills } = req.body;
+  const user = await User.findOne();
+
+  user.profile = { workExperience, companyName, isMentor, skills };
+  await user.save();
+
+  res.json({ message: 'Profile updated successfully' });
+});
+// Increment likes for a post
+app.post('/posts/:id/like', async (req, res) => {
+  try {
+    const postId = req.params.id;
+    await Post.findByIdAndUpdate(postId, { $inc: { likes: 1 } }); // Increment likes
+    res.status(200).send({ message: 'Post liked successfully.' });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to like post.' });
+  }
+});
+
+app.post('/posts', async (req, res) => {
+  const { content } = req.body;
+  const user = await User.findOne(); // Assume user is logged in and fetched from DB
+
+  const newPost = new Post({ content, user: user._id });
+  await newPost.save();
+
+  res.status(201).json({ message: 'Post created successfully' });
+});
+
+app.get('/posts', async (req, res) => {
+  const posts = await Post.find().populate('user');
+  res.json(posts);
+});
+
+app.listen(5000, () => {
+  console.log('Server is running on port 5000');
 });
