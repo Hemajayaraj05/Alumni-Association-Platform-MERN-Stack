@@ -2,15 +2,30 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/alumniDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+// Serve static files (uploaded images)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+mongoose.connect('mongodb://localhost:27017/alumniDB');
+
+
+// Multer setup for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
 });
+
+const upload = multer({ storage });
 
 // Schemas and Models
 const UserSchema = new mongoose.Schema({
@@ -34,6 +49,7 @@ const UserSchema = new mongoose.Schema({
 
 const PostSchema = new mongoose.Schema({
   content: String,
+  imageUrl: String, // New field to store image URL
   postedAt: { type: Date, default: Date.now },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
@@ -99,6 +115,7 @@ app.put('/profile', async (req, res) => {
 
   res.json({ message: 'Profile updated successfully' });
 });
+
 // Increment likes for a post
 app.post('/posts/:id/like', async (req, res) => {
   try {
@@ -110,16 +127,25 @@ app.post('/posts/:id/like', async (req, res) => {
   }
 });
 
-app.post('/posts', async (req, res) => {
+// Post creation with image upload
+app.post('/posts', upload.single('file'), async (req, res) => {
   const { content } = req.body;
   const user = await User.findOne(); // Assume user is logged in and fetched from DB
 
-  const newPost = new Post({ content, user: user._id });
+  const imageUrl = req.file ? `/uploads/${req.file.filename}` : null; // Store image URL if uploaded
+
+  const newPost = new Post({
+    content,
+    imageUrl, // Save image URL in the post
+    user: user._id,
+  });
+
   await newPost.save();
 
   res.status(201).json({ message: 'Post created successfully' });
 });
 
+// Fetch posts along with images
 app.get('/posts', async (req, res) => {
   const posts = await Post.find().populate('user');
   res.json(posts);

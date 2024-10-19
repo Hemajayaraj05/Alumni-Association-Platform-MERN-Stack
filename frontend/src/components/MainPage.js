@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/MainPage.css';
+import { FaThumbsUp } from 'react-icons/fa'; // Import thumbs up icon
 
 function MainPage() {
   const [user, setUser] = useState(null);
@@ -59,7 +60,7 @@ function MainPage() {
 
       <div className="feed-section">
         <FeedForm onNewPost={fetchPosts} /> {/* Pass fetchPosts as a prop */}
-        <Feed posts={posts} onNewPost={fetchPosts} onLike={handleLike} />
+        <Feed posts={posts} onLike={handleLike} />
       </div>
     </div>
   );
@@ -108,20 +109,22 @@ const FeedForm = ({ onNewPost }) => {
   );
 };
 
-const Feed = ({ posts, onNewPost, onLike }) => (
+const Feed = ({ posts, onLike }) => (
   <div className="feed">
     {posts.length > 0 ? (
       posts.map((post) => (
         <div key={post._id} className="post">
           <p>{post.content}</p>
-          {post.file && <img src={post.file} alt="Uploaded" />} {/* Display uploaded image */}
-          <div className="post-actions">
-            <button onClick={() => onLike(post._id)}>Like ({post.likes || 0})</button>
-          </div>
+          {post.imageUrl && (
+            <img src={`http://localhost:5000${post.imageUrl}`} alt="Post" />
+          )}
+          <button onClick={() => onLike(post._id)}>
+            <FaThumbsUp /> Like
+          </button>
         </div>
       ))
     ) : (
-      <p>No posts yet. Be the first to post something!</p>
+      <p>No posts available.</p>
     )}
   </div>
 );
