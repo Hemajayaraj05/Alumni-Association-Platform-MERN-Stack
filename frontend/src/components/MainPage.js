@@ -7,12 +7,17 @@ import { FaThumbsUp } from 'react-icons/fa'; // Import thumbs up icon
 function MainPage() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [profileImage, setProfileImage] = useState(null);
+  const [showAddPostForm, setShowAddPostForm] = useState(false); // State to toggle the Add Post form
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get('http://localhost:5000/user');
         setUser(response.data);
+        if (response.data.profileImage) {
+          setProfileImage(response.data.profileImage);
+        }
       } catch (error) {
         console.error('Error fetching user:', error);
       }
@@ -42,12 +47,36 @@ function MainPage() {
     }
   };
 
+  // Handle profile image change
+  const handleProfileImageChange = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('profileImage', file);
+
+    try {
+      const response = await axios.post('http://localhost:5000/user/upload-profile-image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setProfileImage(response.data.profileImage);
+    } catch (error) {
+      console.error('Error uploading profile image:', error);
+    }
+  };
+
   return (
     <div className="main-page-container">
+      {/* Navbar with the profile image */}
+      <div className="navbar">
+        <Link to="/"><img className="navbar-profile-image" src={profileImage || '/default-profile.png'} alt="Profile" /></Link>
+        <input type="file" onChange={handleProfileImageChange} className="upload-profile-image" />
+      </div>
+
       <div className="profile-section">
         {user && (
           <>
-            <img className="profile-image" src="/path/to/profile-pic.jpg" alt="Profile" />
+            <img className="profile-image" src={profileImage || '/default-profile.png'} alt="Profile" />
             <h3>{user.name}</h3>
             <p><strong>Work Experience:</strong> {user.profile?.workExperience || 'N/A'}</p>
             <p><strong>Company Name:</strong> {user.profile?.companyName || 'N/A'}</p>
@@ -59,16 +88,33 @@ function MainPage() {
       </div>
 
       <div className="feed-section">
-        <FeedForm onNewPost={fetchPosts} /> {/* Pass fetchPosts as a prop */}
+        {/* "+Add Post" Button */}
+        <button className="add-post-button" onClick={() => setShowAddPostForm(!showAddPostForm)}>
+          + Add Post
+        </button>
+
+        {/* Show the form only when the Add Post button is clicked */}
+        {showAddPostForm && <FeedForm onNewPost={fetchPosts} />}
+        
         <Feed posts={posts} onLike={handleLike} />
       </div>
     </div>
   );
 }
 
+// FeedForm Component
 const FeedForm = ({ onNewPost }) => {
   const [content, setContent] = useState('');
   const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    if (selectedFile) {
+      setFilePreview(URL.createObjectURL(selectedFile));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,7 +132,8 @@ const FeedForm = ({ onNewPost }) => {
       });
       setContent('');
       setFile(null);
-      onNewPost(); // Call the passed function to refresh the posts after submission
+      setFilePreview(null);
+      onNewPost(); // Refresh the posts
     } catch (error) {
       console.error('Error posting feed:', error);
     }
@@ -100,15 +147,25 @@ const FeedForm = ({ onNewPost }) => {
         placeholder="What's on your mind?"
         required
       />
-      <input
-        type="file"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
+      <input type="file" onChange={handleFileChange} />
+      {filePreview && (
+        <img
+          src={filePreview}
+          alt="Preview"
+          style={{
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            marginTop: '10px',
+          }}
+        />
+      )}
       <button type="submit">Post</button>
     </form>
   );
 };
 
+// Feed Component
 const Feed = ({ posts, onLike }) => (
   <div className="feed">
     {posts.length > 0 ? (
@@ -118,13 +175,17 @@ const Feed = ({ posts, onLike }) => (
           {post.imageUrl && (
             <img src={`http://localhost:5000${post.imageUrl}`} alt="Post" />
           )}
-          <button onClick={() => onLike(post._id)}>
-            <FaThumbsUp /> Like
-          </button>
+          <div className="post-actions">
+            <button onClick={() => onLike(post._id)}>
+              <FaThumbsUp /> {post.likes} Like{post.likes !== 1 && 's'}
+            </button>
+          </div>
         </div>
       ))
     ) : (
-      <p>No posts available.</p>
+      <div className="no-posts">
+        <p>No posts available.</p>
+      </div>
     )}
   </div>
 );
