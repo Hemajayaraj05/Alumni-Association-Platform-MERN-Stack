@@ -3,6 +3,10 @@
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  justify-content: center;
+  align-items: flex-start; /* Align items at the top */
+  padding: 20px;
+  gap: 20px; /* Add spacing between profile and feed */
 }
 
 .profile-section {
@@ -13,6 +17,10 @@
   padding: 15px;
   border-radius: 10px;
   background-color: #f9f9f9;
+  width: 250px; /* Set a fixed width for profile */
+  text-align: center;
+  position: sticky; /* Makes profile section stay visible when scrolling */
+  top: 20px; /* Ensure it sticks from 20px from top */
 }
 /* Existing styles ... */
 
@@ -39,6 +47,7 @@
   margin-right: 15px;
 }
 
+/* Feed section centered */
 .feed-section {
   width: 80%;
   margin-top: 20px;
@@ -55,6 +64,7 @@
   background-color: #f1f1f1;
 }
 
+/* Feed form styling */
 .feed-form textarea {
   width: 100%;
   height: 80px;
@@ -78,6 +88,7 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .feed-form button:hover {
   background-color: #0056b3;
 }
@@ -88,6 +99,9 @@
   gap: 15px;
 }
 
+=======
+/* Post styles */
+>>>>>>> b5ee79d1a2746d844cdfabf90f1440ff1ac97333
 .post {
   border: 1px solid #ddd;
   padding: 15px;
@@ -114,4 +128,27 @@
 
 .post button:hover {
   background-color: #218838;
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+  .main-page-container {
+    flex-direction: column; /* Stack profile and feed vertically */
+    align-items: center;
+  }
+
+  .profile-section {
+    width: 100%; /* Full width for profile on mobile */
+    margin-bottom: 20px;
+    position: static; /* Disable sticky positioning for mobile */
+  }
+
+  .feed-section {
+    width: 100%;
+    max-width: 100%; /* Full width for feed on mobile */
+  }
+
+  .post {
+    padding: 15px; /* Slightly smaller padding for mobile */
+  }
 }
