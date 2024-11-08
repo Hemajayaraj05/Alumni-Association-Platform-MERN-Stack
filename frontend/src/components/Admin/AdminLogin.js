@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './adminStyles/adminlogin.css';
 
 function Admin() {
   const [username, setUsername] = useState('');
@@ -17,11 +18,9 @@ function Admin() {
       
       if (response.status === 200) {
         alert(response.data.message);
-        // After successful admin login
         localStorage.setItem('role', 'admin'); // Store the role
 
         navigate('/admin-dashboard');
-        // Proceed with further admin actions or redirect
       }
     } catch (error) {
       console.error('Admin login error', error);
@@ -30,23 +29,28 @@ function Admin() {
   };
 
   return (
-    <form onSubmit={handleAdminLogin}>
-      <input 
-        type="text" 
-        value={username} 
-        onChange={(e) => setUsername(e.target.value)} 
-        placeholder="Admin Username" 
-        required 
-      />
-      <input 
-        type="password" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)} 
-        placeholder="Password" 
-        required 
-      />
-      <button type="submit">Admin Login</button>
-    </form>
+   <div className='background'>
+    
+    <div className="admin-container">
+    <div className="title">Admin Login
+      <form className="admin-form" onSubmit={handleAdminLogin}>
+        <input 
+          type="text" 
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)} 
+          placeholder="Admin Username" 
+          required 
+          />
+        <input 
+          type="password" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+          placeholder="Password" 
+          required 
+          />
+        <button type="submit">Login</button>
+      </form>
+    </div></div></div>
   );
 }
 

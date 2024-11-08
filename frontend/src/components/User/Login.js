@@ -29,6 +29,7 @@ const LoginPage = () => {
         event.preventDefault();
         let errors = {};
 
+        // Validation checks
         if (!formData.email.trim()) {
             errors.email = 'Email is required';
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -43,8 +44,13 @@ const LoginPage = () => {
 
         if (Object.keys(errors).length === 0) {
             try {
-                const response = await axios.post('http://localhost:5000/login', formData);
+                const response = await axios.post('http://localhost:5000/api/auth/login', formData);
                 alert(response.data.message); // Show success message
+
+                // Assuming the backend returns the user's role or data
+                localStorage.setItem('role', response.data.role); // Set user role in localStorage
+
+                // Clear form data and errors
                 setFormData({
                     email: '',
                     password: '',
@@ -53,13 +59,15 @@ const LoginPage = () => {
                     email: '',
                     password: '',
                 });
-                navigate('/'); // Redirect to home page after successful login
+
+                // Redirect to Main Page after successful login
+                navigate('/main');
             } catch (error) {
                 console.error('Login error:', error);
                 alert(error.response?.data.message || 'Login failed');
             }
         } else {
-            setFormErrors(errors);
+            setFormErrors(errors); // Set form validation errors
         }
     };
 

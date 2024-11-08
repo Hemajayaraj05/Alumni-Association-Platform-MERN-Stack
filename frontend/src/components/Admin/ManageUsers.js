@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUsers, removeUser } from '../../utils/api';
+import './adminStyles/manageUsers.css';
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([]);
@@ -22,8 +23,8 @@ const ManageUsers = () => {
     };
 
     return (
-        <div>
-            <h2>Manage Users</h2>
+        <div className="manage-users-container">
+            <h1>Manage Users</h1>
             <table>
                 <thead>
                     <tr>

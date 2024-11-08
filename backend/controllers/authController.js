@@ -34,19 +34,25 @@ exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Check if the user exists
     const user = await registerModel.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
+    // Compare the password with the hashed password in the database
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    res.json({ message: 'Login successful!' });
+    // If login is successful, send success message
+    res.json({
+      message: 'Login successful!',
+      userId: user._id,  // Optionally send user ID or other data if needed
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Login failed' });
+    res.status(500).json({ message: 'Login failed due to server error' });
   }
 };

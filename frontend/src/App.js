@@ -7,6 +7,7 @@ import Contact from './components/User/Contact';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import ManageUsers from './components/Admin/ManageUsers';
 import AdminLogin from './components/Admin/AdminLogin';
+import MainPage from './components/MainPage'; // Add MainPage import
 
 function App() {
   // Get the user role from localStorage
@@ -19,6 +20,7 @@ function App() {
       <Route path='/login' element={<LoginPage />} />
       <Route path='/register' element={<RegistrationForm />} />
       <Route path='/contact' element={<Contact />} />
+      <Route path='/main' element={<MainPage />} /> {/* Route for MainPage */}
 
       {/* Admin routes - protected by role */}
       <Route 
@@ -32,7 +34,6 @@ function App() {
       
       {/* Admin login */}
       <Route path='/admin-login' element={<AdminLogin />} />
-
     </Routes>
   );
 }
