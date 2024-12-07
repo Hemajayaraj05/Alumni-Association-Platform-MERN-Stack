@@ -32,7 +32,7 @@ function Admin() {
    <div className='background'>
     
     <div className="admin-container">
-    <div className="title">Admin Login
+    <div className="title"><p>Admin Login</p>
       <form className="admin-form" onSubmit={handleAdminLogin}>
         <input 
           type="text" 

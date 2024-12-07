@@ -23,7 +23,12 @@ const ManageUsers = () => {
     };
 
     return (
-        <div className="manage-users-container">
+        <div className="manage-users-container" style={
+            {paddingTop:"100px",
+             display:"flex",
+             justifyItems:"center",
+             alignItems:"center"
+            }}>
             <h1>Manage Users</h1>
             <table>
                 <thead>

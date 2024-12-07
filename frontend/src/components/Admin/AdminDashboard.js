@@ -8,26 +8,18 @@ const AdminDashboard = () => {
     const [pendingQueries, setPendingQueries] = useState(0);
 
     useEffect(() => {
-        // Fetch users count and pending queries (for simplicity, assuming these values)
+        
         const fetchStats = async () => {
             const users = await getAllUsers();
             setUsersCount(users.length);
-            setPendingQueries(5); // Mock data, replace with actual logic
+            setPendingQueries(5); 
         };
         fetchStats();
     }, []);
 
     return (
-        <div className="admin-dashboard">
-            {/* Left Sidebar */}
-            <div className="sidebar">
-                <h3>Admin Dashboard</h3>
-                <h3>Power of Empowerment</h3>
-                
-                
-            </div>
-
-            {/* Center Content */}
+        <div className="admin-dashboard" style={{paddingTop:"100px"}}>
+           
             <div className="center-content">
                 <h1>Welcome to the Admin Dashboard</h1>
                  
@@ -50,7 +42,7 @@ const AdminDashboard = () => {
                 </div>
             </div>
 
-            {/* Right Section (Manage Users) */}
+           
             <div className="manage-users">
                 <h2>Manage Users</h2>
                 <Link to="/admin/manage-users">Go to Manage Users</Link>

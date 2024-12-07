@@ -1,12 +1,15 @@
 import React from 'react';
 
-const UserProfile = () => {
+// UserProfile component that dynamically loads user info from props
+const UserProfile = ({ userName, userRole, profileImage }) => {
   return (
     <div className="profileHeader">
-      <img src="logo1.jpg" alt="Profile" className="profileImage" />
+      {/* Dynamically set the profile image */}
+      <img src={profileImage} alt="Profile" className="profileImage" />
       <div className="userDetails">
-        <h3>Hemalatha</h3>
-        <p>Web Developer</p>
+        {/* Display user name and role */}
+        <h3>{userName || 'No Name Available'}</h3>
+        <p>{userRole || 'No Role Available'}</p>
       </div>
     </div>
   );

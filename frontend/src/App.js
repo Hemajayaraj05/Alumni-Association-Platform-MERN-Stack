@@ -7,11 +7,12 @@ import Contact from './components/User/Contact';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import ManageUsers from './components/Admin/ManageUsers';
 import AdminLogin from './components/Admin/AdminLogin';
-import MainPage from './components/MainPage'; // Add MainPage import
+import MainPage from './components/MainPage';
+import AddPost from './components/AddPost'
+import EditProfile from './components/EditProfile'; // Import EditProfile
 
 function App() {
-  // Get the user role from localStorage
-  const userRole = localStorage.getItem('role'); // e.g., 'admin' or 'user'
+  const userRole = localStorage.getItem('role');
 
   return (
     <Routes>
@@ -20,7 +21,11 @@ function App() {
       <Route path='/login' element={<LoginPage />} />
       <Route path='/register' element={<RegistrationForm />} />
       <Route path='/contact' element={<Contact />} />
-      <Route path='/main' element={<MainPage />} /> {/* Route for MainPage */}
+      <Route path='/main/*' element={<MainPage />} />
+      <Route path="/profile/add-post" element={<AddPost />} />
+
+      {/* Route for Edit Profile */}
+      <Route path='/profile/edit' element={<EditProfile />} />
 
       {/* Admin routes - protected by role */}
       <Route 
@@ -31,7 +36,7 @@ function App() {
         path='/admin/manage-users' 
         element={userRole === 'admin' ? <ManageUsers /> : <Navigate to="/admin-login" />} 
       />
-      
+
       {/* Admin login */}
       <Route path='/admin-login' element={<AdminLogin />} />
     </Routes>
