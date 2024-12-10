@@ -1,7 +1,6 @@
 // components/Feed.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 const Feed = () => {
   const [posts, setPosts] = useState([]);
 
@@ -29,11 +28,16 @@ const Feed = () => {
       {posts.map((post) => (
         <div key={post._id} className="post">
           <div className="postHeader">
-            <img src={post.userId.profileImage} alt={post.userId.userName} />
-            <h3>{post.userId.userName}</h3>
+            <img src={post.userId.profileImage} alt={post.userId.name} />
+            <h3>{post.userId.name}</h3>
           </div>
           <p>{post.content}</p>
-          {post.imageUrl && <img src={post.imageUrl} alt="Post" />}
+          {post.imageUrl && (
+            <img
+              src={`http://localhost:5000${post.imageUrl}`} // Full URL to the image
+              alt="Post"
+            />
+          )}
           <div className="postFooter">
             <button>Like</button>
             <button>Comment</button>

@@ -8,7 +8,7 @@ const connectDatabase = require('./database/connectDB');
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const profileRoutes = require('./routes/profileRoutes');
-const postRoutes=require('./routes/postRoutes') // Import the new profile route
+const postRoutes = require('./routes/postRoutes');
 
 // Configure environment variables
 dotenv.config({ path: path.join(__dirname, 'config', 'config.env') });
@@ -20,21 +20,20 @@ connectDatabase();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // Adjust to your frontend URL (React or other frontend)
+  origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Allow credentials like cookies
+  credentials: true,
 }));
 
-app.use(express.json()); // Middleware to parse incoming JSON requests
+app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve uploaded files
 
 // Define Routes
-app.use('/api/auth', authRoutes);        // Authentication routes (login, register, etc.)
-app.use('/api/admin', adminRoutes);      // Admin-specific routes (admin management)
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/api/auth', profileRoutes);
 app.use('/api/posts', postRoutes);
-  // Profile-specific routes (user profile, editing, etc.)
 
-// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);

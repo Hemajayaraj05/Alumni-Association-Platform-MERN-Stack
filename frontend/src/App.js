@@ -10,6 +10,7 @@ import AdminLogin from './components/Admin/AdminLogin';
 import MainPage from './components/MainPage';
 import AddPost from './components/AddPost'
 import EditProfile from './components/EditProfile'; // Import EditProfile
+import '@blueprintjs/core/lib/css/blueprint.css';
 
 function App() {
   const userRole = localStorage.getItem('role');

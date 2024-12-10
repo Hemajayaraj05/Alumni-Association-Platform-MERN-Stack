@@ -1,20 +1,22 @@
-// authMiddleware.js
-const jwt = require('jsonwebtoken');
+// middleware/authMiddleware.js
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
 const authMiddleware = (req, res, next) => {
-  const token = req.header('Authorization')?.split(' ')[1];
+  const token = req.header('Authorization')?.split(' ')[1]; // Extract token
+  console.log('Received Token:', token); // Log token for debugging
 
   if (!token) {
     return res.status(401).json({ message: 'No token, authorization denied' });
   }
 
   try {
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user info to request
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify token
+    console.log('Decoded Token:', decoded); // Log decoded data
+    req.user = decoded; // Attach user data to request
     next();
-  } catch (error) {
-    return res.status(401).json({ message: 'Token is not valid' });
+  } catch (err) {
+    console.error('Token error:', err.message); // Log detailed error
+    res.status(401).json({ message: 'Invalid token' });
   }
 };
 

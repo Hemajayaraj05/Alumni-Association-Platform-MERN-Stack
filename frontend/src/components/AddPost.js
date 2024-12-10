@@ -1,7 +1,6 @@
-// components/AddPost.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import './User/styles/addpost.css'
+import './User/styles/addpost.css';
 
 const AddPost = () => {
   const [postText, setPostText] = useState('');
@@ -9,34 +8,36 @@ const AddPost = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handlePost = async () => {
-    setIsSubmitting(true);
-    const formData = new FormData();
-    formData.append('content', postText);
-    if (image) {
-      formData.append('image', image);
+    if (!postText.trim()) {
+      console.error("Content is required"); // Log error if content is empty
+      return;
     }
-
+  
     try {
-      const response = await axios.post('http://localhost:5000/api/posts/create', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-
-      if (response.status === 200) {
-        alert('Post created successfully');
-        setPostText('');
-        setImage(null);
-      }
-    } catch (error) {
-      console.error('Error creating post:', error);
-      alert('Failed to create post');
-    } finally {
-      setIsSubmitting(false);
+      const token = localStorage.getItem('token'); // Retrieve token from storage
+      const postData = {
+        content: postText, // Use user input for content
+        imageUrl: image ? image.name : null, // Optional field if an image is uploaded
+      };
+  
+      const response = await axios.post(
+        'http://localhost:5000/api/posts/create',
+        postData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add Authorization header
+          },
+        }
+      );
+  
+      console.log("Post created successfully:", response.data);
+      setPostText(''); // Clear the textarea after successful submission
+      setImage(null); // Clear the image input after successful submission
+    } catch (err) {
+      console.error("Error creating post:", err.response?.data || err.message);
     }
   };
-
+  
   return (
     <div className="addPostForm">
       <textarea

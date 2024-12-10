@@ -1,13 +1,22 @@
 // models/Post.js
 const mongoose = require('mongoose');
 
-const postSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  content: { type: String, required: true },
-  imageUrl: { type: String, default: '' },
-  createdAt: { type: Date, default: Date.now },
-});
+const postSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'RegisteredUser', // Match the model name used in `registerModel`
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+    },
+  },
+  { timestamps: true } // Automatically handle createdAt and updatedAt
+);
 
-const Post = mongoose.model('Post', postSchema);
-
-module.exports = Post;
+module.exports = mongoose.model('Post', postSchema);

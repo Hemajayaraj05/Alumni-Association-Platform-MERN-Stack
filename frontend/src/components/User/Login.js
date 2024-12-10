@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaLock, FaEnvelope } from 'react-icons/fa';
 import axios from 'axios';
 
+
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -55,18 +56,27 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', formData);
-
-      // Check if we received the required data
-      if (response.data.token) {
-        // Store user details in localStorage
-        localStorage.setItem('_id', response.data._id);
-        localStorage.setItem('userName', response.data.userName);
-        localStorage.setItem('role', response.data.userRole);
-        localStorage.setItem('profileImage', response.data.profileImage);
-
-        // Redirect to the main page after login
+      if (response.status === 200) {
+        const { token, _id ,userName,userRole} = response.data;
+        localStorage.setItem('token', token);
+           localStorage.setItem('userName', userName);
+        localStorage.setItem('role', userRole);
+        localStorage.setItem('userId', _id); // Save userId to localStorage
+        // Navigate to the main page after login
         navigate('/main');
-      } else {
+      }
+      // Check if we received the required data
+      // if (response.data.token) {
+      //   // Store user details in localStorage
+      //   localStorage.setItem('_id', response.data._id);
+      //   localStorage.setItem('userName', response.data.userName);
+      //   localStorage.setItem('role', response.data.userRole);
+      //   localStorage.setItem('profileImage', response.data.profileImage);
+
+      //   // Redirect to the main page after login
+      //   navigate('/main');
+      // } 
+      else {
         setServerMessage(response.data.message || 'Login failed');
       }
     } catch (error) {
