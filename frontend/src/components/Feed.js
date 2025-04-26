@@ -1,9 +1,9 @@
-// components/Feed.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
 const Feed = () => {
   const [posts, setPosts] = useState([]);
-
+  const [count,setCount] = useState(1);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -26,21 +26,25 @@ const Feed = () => {
   return (
     <div className="feedContainer">
       {posts.map((post) => (
-        <div key={post._id} className="post">
+        <div key={post._id} className="postCard">
           <div className="postHeader">
-            <img src={post.userId.profileImage} alt={post.userId.name} />
-            <h3>{post.userId.name}</h3>
+           
+            <div className="userInfo">
+              <h3>{post.userId.name}</h3>
+              <p>{new Date(post.createdAt).toLocaleDateString()}</p>
+            </div>
           </div>
-          <p>{post.content}</p>
+          <p className="postContent ">{post.content}</p>
           {post.imageUrl && (
             <img
               src={`http://localhost:5000${post.imageUrl}`} // Full URL to the image
               alt="Post"
+              className="postImage"
             />
           )}
           <div className="postFooter">
-            <button>Like</button>
-            <button>Comment</button>
+            <button className="likeBtn" onClick={()=>{setCount(count+1)}}> {count} Like</button>
+            <button className="commentBtn">Comment</button>
           </div>
         </div>
       ))}

@@ -19,7 +19,6 @@ function Admin() {
       if (response.status === 200) {
         alert(response.data.message);
         localStorage.setItem('role', 'admin'); // Store the role
-
         navigate('/admin-dashboard');
       }
     } catch (error) {

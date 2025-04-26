@@ -36,6 +36,7 @@
     border-radius: 5px;
     border: 1px solid #ddd;
   }
+
   
   /* Content layout */
   .content {
@@ -85,6 +86,19 @@
     border-radius: 5px;
     cursor: pointer;
   }
+  .profileImageDefault {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
   
   .editProfile {
     background-color: #4CAF50;
@@ -147,3 +161,129 @@
     background-color: #ccc;
   }
   
+  /*Feed*/
+ /* Feed container */
+.feedContainer {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Post card style */
+.postCard {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+.postCard:hover {
+  transform: translateY(-3px);
+}
+
+/* Post header with user info */
+.postHeader {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+}
+
+.userInfo h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.userInfo p {
+  font-size: 12px;
+  color: #888;
+  margin: 3px 0 0 0;
+}
+
+/* Post content styling */
+.postContent {
+  padding: 10px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+/* Post image */
+.postImage {
+  width: 100%;
+  height: auto;
+  border-top: 1px solid #f5f5f5;
+  object-fit: cover;
+}
+
+/* Post footer with like and comment buttons */
+.postFooter {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #f5f5f5;
+  background-color: #f9f9f9;
+}
+
+.likeBtn, .commentBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 8px;
+}
+
+.likeBtn:hover, .commentBtn:hover {
+  background-color: #0056b3;
+}
+
+.likeBtn:disabled, .commentBtn:disabled {
+  background-color: #dcdcdc;
+  cursor: not-allowed;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .feedContainer {
+    padding: 5px;
+  }
+
+  .postCard {
+    padding: 8px;
+  }
+
+  .postHeader {
+    padding: 8px;
+  }
+
+  .userInfo h3 {
+    font-size: 13px;
+  }
+
+  .postContent {
+    font-size: 12px;
+  }
+
+  .likeBtn, .commentBtn {
+  
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+}

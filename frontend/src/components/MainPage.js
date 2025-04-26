@@ -67,7 +67,6 @@ const MainPage = () => {
           <UserProfile
             userName={userInfo.userName}
             userRole={userInfo.userRole}
-            profileImage={userInfo.profileImage}
           />
           <Link to="/profile/edit" className="editProfile">Edit Profile</Link>
           <Link to="/profile/add-post" className="addPost">Add a Post</Link>

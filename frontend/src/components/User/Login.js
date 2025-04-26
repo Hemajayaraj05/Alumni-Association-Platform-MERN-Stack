@@ -15,13 +15,11 @@ const LoginPage = () => {
   const [serverMessage, setServerMessage] = useState('');
   const navigate = useNavigate();
 
-  // Handle form input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Validate form inputs
   const validateForm = () => {
     const errors = {};
     if (!formData.email.trim()) {
@@ -39,18 +37,16 @@ const LoginPage = () => {
     return errors;
   };
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Validate form inputs
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
     }
 
-    // Clear previous errors and messages
+  
     setFormErrors({});
     setServerMessage('');
 

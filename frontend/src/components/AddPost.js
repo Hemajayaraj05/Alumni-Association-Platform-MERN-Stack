@@ -9,35 +9,41 @@ const AddPost = () => {
 
   const handlePost = async () => {
     if (!postText.trim()) {
-      console.error("Content is required"); // Log error if content is empty
+      console.error('Content is required');
       return;
     }
-  
+
+    const formData = new FormData();
+    formData.append('content', postText); // Append the content
+    if (image) {
+      formData.append('image', image); // Append the image file
+    }
+
     try {
       const token = localStorage.getItem('token'); // Retrieve token from storage
-      const postData = {
-        content: postText, // Use user input for content
-        imageUrl: image ? image.name : null, // Optional field if an image is uploaded
-      };
-  
+      setIsSubmitting(true); // Set submitting state to true to disable button during submission
+
       const response = await axios.post(
         'http://localhost:5000/api/posts/create',
-        postData,
+        formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Add Authorization header
+            'Authorization': `Bearer ${token}`, // Include the token for authentication
+            'Content-Type': 'multipart/form-data', // Important for file uploads
           },
         }
       );
-  
-      console.log("Post created successfully:", response.data);
-      setPostText(''); // Clear the textarea after successful submission
-      setImage(null); // Clear the image input after successful submission
+
+      console.log('Post created successfully:', response.data);
+      setPostText(''); // Clear the text input after submission
+      setImage(null); // Clear the image input after submission
     } catch (err) {
-      console.error("Error creating post:", err.response?.data || err.message);
+      console.error('Error creating post:', err.response?.data || err.message);
+    } finally {
+      setIsSubmitting(false); // Reset submitting state
     }
   };
-  
+
   return (
     <div className="addPostForm">
       <textarea
